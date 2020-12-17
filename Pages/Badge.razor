@@ -1,5 +1,4 @@
 @page "/badge/{id}"
-@inject HttpClient Http
 
 @if (badge == null)
 {
@@ -9,36 +8,4 @@ else
 {
     <label>@badge.Name</label>
     <p>@badge.Description</p>
-}
-
-@code {
-    [Parameter]
-    public string id { get; set; }
-    private Badge badge;
-
-    protected override async Task OnInitializedAsync()
-    {
-        badge = (await Http.GetFromJsonAsync<Badge[]>("sample-data/badges.json"))[int.Parse(id)];
-    }
-
-    private String BadgeLogo(String img) {
-        if (img != null) {
-            return img;
-        } else {
-            return "https://via.placeholder.com/150";
-        }
-    }
-
-    public class Badge
-    {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public string Image { get; set; }
-        public string Type { get; set; }
-        public string Description { get; set; }
-        public string Author { get; set; }
-        public int RootNode { get; set; }
-        public string Created_at { get; set; }
-        public bool IsComplete { get; set; }
-    }
 }
